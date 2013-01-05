@@ -1,8 +1,7 @@
 function articleCtrl($scope){
 	
   $scope.articles = [
-    {text:'learn angular', done:true},
-    {text:'build an angular app', done:false}];
+    {text:'http://developer.chrome.com/apps/angular_framework.html', done:false},
  
   $scope.addArticle = function() {
     $scope.articles.push({text:$scope.articleText, done:false});

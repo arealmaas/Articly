@@ -17,7 +17,7 @@
 			<h1>Hello {{name}}</h1>
             -->
         	<div ng-controller="articleCtrl">
-        		<span>{{remaining()}} of {{articles.length}} remaining</span>
+        		<span>{{remaining()}} of {{articles.length}} not read.</span>
 
         		[ <a href="" ng-click="archive()">archive</a>]	
 
@@ -35,6 +35,19 @@
 
         </div>
 		
+		<div class="container well">
+			Browsers: <input list="browsers">
+			<datalist id="browsers">
+				<option value="Chrome">
+				<option value="Opera">
+				<option value="Safari">
+				<option value="Firefox">
+			</datalist>
+		</div>
+
+		<div class="container well">
+			
+		</div>
 		
 		
 	</body>
