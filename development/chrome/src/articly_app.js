@@ -1,19 +1,110 @@
 function articleCtrl($scope){
 	
   $scope.articles = [
-    {text:'http://developer.chrome.com/apps/angular_framework.html', done:false},
- 
+    {
+      id:1,
+      link:'http://developer.chrome.com/apps/angular_framework.html', 
+      text:'Stackoverflow vs. web api',
+      about:'The article is about a comparison between the two web api\'s for .NET.',
+      author:'are',
+      members:[{
+
+          name:"are",
+          done:false
+        },
+        {
+          name:"kenneth",
+          done:false
+        },
+        {
+          name:"TC",
+          done:false
+        },
+        {
+          name:"erich",
+          done:false
+      }
+      ],
+      addDate:new Date(),
+      read:false
+    }
+    ];
+
+
+  $scope.getArticleById = function(id){
+      angular.forEach($scope.articles, function(article){
+        if(article.id == id)
+          return article;
+      });
+  };
+
+  $scope.setCurrentArticle = function(id){
+
+    angular.forEach($scope.articles, function(article){
+
+      if(article.id == id)
+          $scope.currArt = article;
+
+    });
+  };
+
+  $scope.currentArticle = function(){
+
+    return $scope.currArt;
+  };
+
+  $scope.numberOfMembers = function(article){
+
+    return article.members.length;
+  };
+
   $scope.addArticle = function() {
-    $scope.articles.push({text:$scope.articleText, done:false});
+    $scope.articles.push({id:$scope.articles.length+1, text:$scope.articleText, link:$scope.articleLink, about:$scope.articleAbout, author:'are', members:[{
+          name:"are",
+          done:false
+        },{
+          name:"kenneth",
+          done:false
+        },{
+          name:"TC",
+          done:false
+        },{
+          name:"erich",
+          done:false
+      }
+      ],addDate:new Date()});
     $scope.articleText = '';
   };
  
-  $scope.remaining = function() {
+  $scope.remainingArticles = function() {
     var count = 0;
     angular.forEach($scope.articles, function(article) {
-      count += article.done ? 0 : 1;
+      
+      if(article.read)  
+          count += 1;
+    
     });
     return count;
+  };
+
+  $scope.remainingArticles = function() {
+    var count = 0;
+    angular.forEach($scope.articles, function(article) {
+      
+      if(article.read)  
+          count += 1;
+    
+    });
+    return count;
+  };
+
+  $scope.remainingRead = function(article){
+      var count = 0;
+      angular.forEach(article.members, function(member){
+        count += member.done?1:0;
+      });
+      article.read = count==article.members.length?true:false;
+      return count;
   };
  
   $scope.archive = function() {

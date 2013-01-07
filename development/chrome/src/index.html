@@ -1,54 +1,86 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app >
 	<head>
 		<link rel="stylesheet" href="content/style/bootstrap/css/bootstrap.css"/>
 		<link rel="stylesheet" href="content/style/bootstrap/css/bootstrap-responsive.css"/>
-        <script src="content/style/bootstrap/style/js/bootstrap.min.js"></script>
-		<!--<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>-->
+		<link rel="stylesheet" href="content/style/site.css"/>
+		<script src="lib/jquery-1.8.2.min.js"></script>
         <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>-->
+        <script src="lib/bootstrap.js"></script>
         <script src="lib/angular.min.js"></script>
         <script src="articly_app.js"></script>
-
 	</head>
 	<body>
 		<div class="container well">
             <p class="lead">Paste in some articles! :)</p>
             <!-- <input type="text" ng-model="name" placeholder="Write somethin'" class="input-large"/>
-			<h1>Hello {{name}}</h1>
+			<h1>Hello {{name}}</h1> 
             -->
         	<div ng-controller="articleCtrl">
-        		<span>{{remaining()}} of {{articles.length}} not read.</span>
+        		<span>{{remainingArticles()}} of {{articles.length}} not read.</span>
 
-        		[ <a href="" ng-click="archive()">archive</a>]	
+        		[<a href="" ng-click="archive()">clean up</a>]	
 
         		<ul class="unstyled">
         			<li ng-repeat="article in articles">
-        			<input type="checkbox" ng-model="article.done">
-        			<span class="done-{{article.done}}">{{article.text}}</span>
+        				<div class="done-article-{{article.done}}">
+		        			<span>{{article.text}}</span>
+							<a href="#detailsModal" data-toggle="modal" ng-click="setCurrentArticle(article.id)" role="button" class="btn">Choose</a>
+							<span class="done-article-{{article.read}}">{{remainingRead(article)}}/{{numberOfMembers(article)}} read.</span>
+						</div>
         			</li>
+
         		</ul>
-        		<form ng-submit="addArticle()">
-        			<input type="text" ng-model="articleText" size="30" placeholder="add new article here">
-        			<input type="submit" class="btn-primary" value="add">
-        	</div>
+        		<form ng-submit="addArticle()" id="addArticleForm">
+	        		<div class="row-fluid">	
+	        			<input id="addArticle" type="text" ng-model="articleText" size="30" placeholder="add new article here">
+	        		</div>
+	        		
+	        		<div class="row-fluid">
+	        			<input class="linkInfo" type="text" ng-model="articleLink" size="30" placeholder="Add link">
+	        		</div>
+	        		<div class="row-fluid input-append">
+	        			<input class="linkInfo" type="text" ng-model="articleAbout" size="30" placeholder="What is the article about?">
+	        			<input class="btn linkInfo" type="submit" value="add!">
+	        		</div>
+
+        			<div id="detailsModal" ng-controller="articleCtrl" class="modal hide fade">
+        				<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">x</button>
+        				<p class="lead">{{currentArticle().text}}</p>
+        				</div>
+						<div class="modal-body">
+							<blockquote>
+							  <a ng-href="{{currentArticle().link}}">{{currentArticle().about}}</a>
+							  <small>Added by <cite title="Source Title">{{currentArticle().author}}</cite></small>
+							</blockquote>
+							Read:	
+							<ul class="unstyled">
+			        			<li ng-repeat="member in currentArticle().members">
+
+				        			<input type="checkbox" ng-model="member.done">
+				        			<span class="done-member-{{member.done}}">{{member.name}}</span>
+			        			</li>
+		        			</ul>
+						</div>
+					</div>
+
+
+        		</form>
+        	</div>			
 
 
         </div>
 		
-		<div class="container well">
-			Browsers: <input list="browsers">
-			<datalist id="browsers">
-				<option value="Chrome">
-				<option value="Opera">
-				<option value="Safari">
-				<option value="Firefox">
-			</datalist>
-		</div>
 
-		<div class="container well">
-			
-		</div>
-		
+		<script>
+		$(function(){
+			$('.linkInfo').toggle();
+			$('#addArticle').on('focus', function(){
+				$('.linkInfo').toggle();
+			});
+		});
+		</script>
 		
 	</body>
 </html>
