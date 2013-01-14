@@ -30,7 +30,6 @@ function articleCtrl($scope){
     }
     ];
 
-
   $scope.getArticleById = function(id){
       angular.forEach($scope.articles, function(article){
         if(article.id == id)
@@ -59,21 +58,34 @@ function articleCtrl($scope){
   };
 
   $scope.addArticle = function() {
-    $scope.articles.push({id:$scope.articles.length+1, text:$scope.articleText, link:$scope.articleLink, about:$scope.articleAbout, author:'are', members:[{
-          name:"are",
-          done:false
-        },{
-          name:"kenneth",
-          done:false
-        },{
-          name:"TC",
-          done:false
-        },{
-          name:"erich",
-          done:false
+    var about = $scope.articleAbout;
+    var text = $scope.articleText;
+    var link = $scope.articleLink;
+
+    $scope.articles.push(
+      {
+        id:$scope.articles.length+1, 
+        text:text==''?'uten navn':text, 
+        link:link==''?'uten navn':link,
+        about:about==''?'uten navn':about, 
+        author:'are', 
+        members:[{
+            name:"are",
+            done:false
+          },{
+            name:"kenneth",
+            done:false
+          },{
+            name:"TC",
+            done:false
+          },{
+            name:"erich",
+            done:false
       }
       ],addDate:new Date()});
     $scope.articleText = '';
+    $scope.articleLink = '';
+    $scope.articleAbout = '';
   };
  
   $scope.remainingArticles = function() {
@@ -111,9 +123,8 @@ function articleCtrl($scope){
     var oldArticles = $scope.articles;
     $scope.articles = [];
     angular.forEach(oldArticles, function(article) {
-      if (!article.done) $scope.articles.push(article);
+      if (!article.read) $scope.articles.push(article);
     });
   };
-
 
 }
