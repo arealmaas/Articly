@@ -1,0 +1,21 @@
+/* Will be compiled down to a single stylesheet with your sass files */
+#detailsWrapper{
+
+}
+
+.done-member-true{
+	text-decoration: line-through;
+	color: #797979;
+}
+
+.done-article-true{
+	background-color: #00F800;
+	color: #0F0F0F;
+	box-shadow: 1px 1px 6px green;
+	border-radius: 4px;
+}
+
+.articleList{
+	max-height: 200px;
+	overflow: scroll;
+}
